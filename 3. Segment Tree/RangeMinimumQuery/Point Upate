@@ -1,0 +1,78 @@
+// POINT UPDATE
+#include <bits/stdc++.h>
+using namespace std;
+vector <int> input;
+vector <int> stree;
+
+void build(int start,int end,int index){
+
+   //base case
+   if(start == end){
+        stree[index] = input[start];
+        return;
+   }
+   //recursive call
+   int mid = (start + end ) / 2;
+   build(start,mid,index*2+1);
+   build(mid+1,end,index*2+2);
+
+   stree[index] = min(stree[index*2 + 1],stree[index*2 + 2]);
+   return;
+
+
+
+}
+//here point is for input array and index is for segment tree
+void update(int start,int end,int point,int value,int index){
+    //complete overlap
+
+    if(start == end && start == point){
+
+        stree[index] = value;
+        return;
+    }
+    // no overlap
+    if(start > point || end < point){
+
+        return;
+    }
+   //recursive call
+   int mid = (start + end ) / 2;
+   //traverse left right
+   update(start,mid,point,value,index*2+1);
+   update(mid+1,end,point,value,index*2+2);
+
+   // update minimum
+   stree[index] = min(stree[index*2 + 1],stree[index*2 + 2]);
+   return;
+
+
+
+}
+
+int main(){
+   int n,i,t;
+   cin>>n;
+   for(i=0;i<n;i++){
+      cin>>t;
+      input.push_back(t);
+  }
+
+  for(i=0;i<4*n;i++){
+    stree.push_back(INT_MAX);
+   }
+// element mathematically the segment tree can have is 4*n + 1
+    build(0,n-1,0);
+
+  for(i=0;i<4*n && stree[i] != INT_MAX ;i++){
+      cout<<stree[i]<<" ";
+   }
+
+  update(0,n-1,8,3,0);
+  update(0,n-1,3,3,0);
+  cout<<endl<<"after update"<<endl;
+  for(i=0;i<4*n && stree[i] != INT_MAX ;i++){
+      cout<<stree[i]<<" ";
+  }
+  return 0;
+}
