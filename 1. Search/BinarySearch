@@ -1,1 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//searches for the number in a sorted array and returns the index if number is found else returns -1
+//Binary Search is divide and conquer algorithm
+
+int binarysearch(int arr[],int find,int length){
+    
+    int lower,upper,middle;
+    
+    lower = 0;
+    upper = length;
+    
+    
+    while(lower <= upper){
+        
+    middle = (lower + upper)/2;
+    
+    if(arr[middle] == find)
+    return middle;
+        
+    if(arr[middle] > find)
+    upper = middle - 1;
+    
+    else 
+    lower = middle + 1;
+        
+    }
+    
+    
+    return -1;
+    
+}
+
+
+int main() {
+	
+	int arr[] = {1,2,3,4,5,6,7,8,9,10,11};
+	
+	int length = sizeof(arr)/sizeof(int);
+	
+	int find = 10;
+	
+	cout<<binarysearch(arr,find,length);
+	
+	return 0;
+}
 
