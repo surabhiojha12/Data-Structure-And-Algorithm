@@ -1,0 +1,42 @@
+// BUILD A RANGE MINIMUM QUERY
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector <int> input;
+vector <int> stree;
+
+void build(int start,int end,int index){
+
+   //base case
+   if(start == end){
+        stree[index] = input[start];
+        return;
+   }
+   //recursive call
+   int mid = (start + end ) / 2;
+   build(start,mid,index*2+1);
+   build(mid+1,end,index*2+2);
+
+   stree[index] = min(stree[index*2 + 1],stree[index*2 + 2]);
+   return;
+}
+
+int main(){
+    int n,i,t;
+    cin>>n;
+    for(i=0;i<n;i++){
+      cin>>t;
+      input.push_back(t);
+    }
+
+    for(i=0;i<4*n;i++){
+      stree.push_back(INT_MAX);
+    }
+    // element mathematically the segment tree can have is 4*n + 1
+    build(0,n-1,0);
+    for(i=0;i<4*n && stree[i] != INT_MAX ;i++){
+      cout<<stree[i]<<" ";
+    }
+    return 0;
+}
