@@ -1,1 +1,44 @@
+#include<bits/stdc++.h>
 
+using namespace std;
+
+// adjacecny list implementation of graph
+
+void build_graph(vector <int> adjList[],int node,int adj,bool bidir = true){
+    
+    adjList[node].push_back(adj);
+
+    if(bidir){
+        adjList[adj].push_back(node);
+    }
+}
+
+void display_graph(vector <int> adjList[],int v){
+    
+    for(int i=0;i<v;i++){
+        cout<<i<<"-> ";
+        for(auto value:adjList[i]){
+            cout<<value<<",";
+        }
+        cout<<endl;
+    }
+}
+
+int main(){
+    // no of vertices
+    int v = 5;
+    vector <int> adjList[v];
+    
+    
+    build_graph(adjList,0,1);
+    build_graph(adjList,0,4);
+    build_graph(adjList,1,4);
+    build_graph(adjList,1,3);
+    build_graph(adjList,1,2);
+    build_graph(adjList,2,3);
+    build_graph(adjList,3,4);
+
+    display_graph(adjList,v);
+
+    return 0;
+}
