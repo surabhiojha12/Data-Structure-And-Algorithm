@@ -68,7 +68,7 @@ int main(){
     3------>4------->5
     
     */
-
+    // graph should be DAG(Directed Acyclic Graph)
     graph_build(adjList,0,1,false);
     graph_build(adjList,0,3,false);
     graph_build(adjList,1,2,false);
