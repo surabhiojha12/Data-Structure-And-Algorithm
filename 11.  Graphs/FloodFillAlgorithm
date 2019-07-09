@@ -29,7 +29,9 @@ void flood_fill(char matrix[][c],int r,char ch,char replace,int i,int j){
     if(matrix[i][j] != ch){
         return;
     }
-    
+    //intermediate filling display
+    cout<<endl;
+    print_graph(matrix,r);
     //recursive case
     for(int k=0;k<4;k++){
         matrix[i][j] = replace;
