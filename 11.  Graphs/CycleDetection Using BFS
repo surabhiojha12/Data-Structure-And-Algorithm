@@ -1,0 +1,87 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+// adjacecny list implementation of graph
+
+void build_graph(vector <int> adjList[],int node,int adj,bool bidir = true){
+    
+    adjList[node].push_back(adj);
+
+    if(bidir){
+        adjList[adj].push_back(node);
+    }
+}
+
+void display_graph(vector <int> adjList[],int v){
+    
+    for(int i=0;i<v;i++){
+        cout<<i<<"-> ";
+        for(auto value:adjList[i]){
+            cout<<value<<",";
+        }
+        cout<<endl;
+    }
+}
+
+
+bool cycle_detection_bfs(vector <int> adjList[],int src,int v){
+
+    queue <int> q;
+    vector <int> visited(v);
+    // parent to store which node called the child node first. To avoid boundary conflict.
+    vector <int> parent(v);
+
+    q.push(src);
+    visited[src] = 1;
+    parent[src] = src;
+
+
+    while(!q.empty()){
+        int node = q.front();
+        q.pop();
+
+        for(auto m: adjList[node]){
+            if(visited[m] == 1 && parent[node] != m ){
+                return true; //graph has cycle
+            }
+
+            else if(visited[m] == 0){
+                q.push(m);
+                visited[m] = 1;
+                parent[m] = node;
+            }
+        }
+    }
+
+    return false; // graph has no cycle
+
+}
+
+
+int main(){
+    // no of vertices
+    int v = 5;
+    vector <int> adjList[v];
+    
+    
+    build_graph(adjList,0,1);
+    build_graph(adjList,0,4);
+    build_graph(adjList,4,3);
+    build_graph(adjList,3,2);
+    
+
+    display_graph(adjList,v);
+
+    bool result = cycle_detection_bfs(adjList,0,v);
+  
+    if(result){
+        cout<<"Graph Contains cycle \n";
+    }
+
+    else{
+        cout<<"Graph Contains no cycle \n";
+    }
+
+    return 0;
+}
