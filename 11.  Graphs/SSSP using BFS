@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+// adjacecny list implementation of graph
+
+void build_graph(vector <int> adjList[],int node,int adj,bool bidir = true){
+    
+    adjList[node].push_back(adj);
+
+    if(bidir){
+        adjList[adj].push_back(node);
+    }
+}
+
+void display_graph(vector <int> adjList[],int v){
+    
+    for(int i=0;i<v;i++){
+        cout<<i<<"-> ";
+        for(auto value:adjList[i]){
+            cout<<value<<",";
+        }
+        cout<<endl;
+    }
+}
+
+void bfs_sssp(vector <int> adjList[],int v,int source){
+
+    cout<<"SSSP using BFS Is \n";
+    queue <int> qu;
+    vector <int> visited(v);
+
+    for(int i=0;i<visited.size();i++){
+        visited[i] = INT_MAX;
+    }
+
+    qu.push(source);
+    visited[source] = 0;
+
+    while(!qu.empty()){
+        int value = qu.front();
+        for(auto m : adjList [value]){
+            if(visited[m] == INT_MAX){
+            qu.push(m);
+            visited[m] = visited[value] + 1;
+            }
+        }
+        qu.pop();
+    }
+
+    for(int i=0;i<visited.size();i++){
+        cout<<"Source = "<<source<<" TO Destination "<<i<<" = "<<visited[i]<<endl;
+    }
+
+}
+
+
+
+
+int main(){
+    // no of vertices
+    int v = 5;
+    vector <int> adjList[v];
+    
+    
+    build_graph(adjList,0,1);
+    build_graph(adjList,0,4);
+    build_graph(adjList,1,4);
+    build_graph(adjList,1,3);
+    build_graph(adjList,1,2);
+    build_graph(adjList,2,3);
+    build_graph(adjList,3,4);
+
+    display_graph(adjList,v);
+    bfs_sssp(adjList, v,0);
+
+    return 0;
+}
