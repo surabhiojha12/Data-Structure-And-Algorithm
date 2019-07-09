@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+
+
+void graph_build(vector <int> adjList[],int src,int dst,bool bidir = true){
+    adjList[src].push_back(dst);
+    if(bidir){
+        adjList[dst].push_back(src);
+    }
+}
+
+void display_graph(vector <int> adjList[],int v){
+
+    for(int i=0;i<v;i++){
+        cout<<i<<"---->"<<" ";
+        for(auto m:adjList[i]){
+            cout<<m<<",";
+        }
+        cout<<endl;
+    }
+}
+
+void dfs_recursive(vector <int> adjList[],vector <int> &visited,int src,vector <int> & topologial){
+   
+    visited[src] = 1;
+    for(auto m:adjList[src]){
+            if(visited[m] == 0){
+                dfs_recursive(adjList,visited,m,topologial);
+            }
+    }
+
+    topologial.push_back(src);
+}
+
+void dfs_topological(vector <int> adjList[],int v){
+    vector <int> visited(v);
+    vector <int> topologial;
+    cout<<"Topological order using dfs is \n"; //dfs forest is collection of all trees;
+    int component = 0;
+    
+    // loop to find if any component is not visited
+    for(int i=0;i<v;i++){
+        if(visited[i] == 0){
+                
+                dfs_recursive(adjList,visited,i,topologial);
+        }
+    }
+
+   for(auto m: topologial){
+       cout<<m<<" ---> ";
+   }
+
+}
+
+int main(){
+
+    int v  = 6;
+    vector <int> adjList[v];
+    //graph representation
+    /* 
+    
+    0 ---> 1 --------> 2
+    |                |   
+    |                |
+    \|/             \|/
+    3------>4------->5
+    
+    */
+
+    graph_build(adjList,0,1,false);
+    graph_build(adjList,0,3,false);
+    graph_build(adjList,1,2,false);
+    graph_build(adjList,2,5,false);
+    graph_build(adjList,3,4,false);
+    graph_build(adjList,4,5,false);
+   
+
+    display_graph(adjList,v);
+
+    dfs_topological(adjList,v);
+
+    return 0;
+
+}
