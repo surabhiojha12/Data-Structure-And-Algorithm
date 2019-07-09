@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int dx[] = {0,0,-1,1};
+int dy[] = {-1,1,0,0};
+const int c = 20;
+
+void print_graph(char matrix[][c],int r){
+
+    int i,j;
+
+    for(i=0;i<r;i++){
+        for(j=0;j<c;j++){
+            cout<<matrix[i][j];
+        }
+        cout<<endl;
+    }
+}
+
+void flood_fill(char matrix[][c],int r,char ch,char replace,int i,int j){
+
+    //base case
+    if(i<0 || j<0 || i>=r || j>=c ){
+        return;
+    }
+
+    //boundary case for the shape
+    if(matrix[i][j] != ch){
+        return;
+    }
+    
+    //recursive case
+    for(int k=0;k<4;k++){
+        matrix[i][j] = replace;
+        flood_fill(matrix, r,ch,replace,i+dx[k],j+dy[k]);
+    }
+}
+
+int main(){
+    int r=0;
+    cin>>r;
+
+    char matrix[r][c];
+
+    int i,j;
+    // flood fill algorithm works with 2d matrix
+    for(i=0;i<r;i++){
+        for(j=0;j<c;j++){
+            cin>>matrix[i][j];
+        }
+    }
+
+    print_graph(matrix,r);
+
+    flood_fill(matrix,r,'.','-',2,2);
+    
+    cout<<endl;
+    print_graph(matrix,r);
+
+   
+    /* 
+    input
+    5
+    .||||||||||||||||||.
+    .|................|.
+    .|................|.
+    .|................|.
+    .||||||||||||||||||.
+    
+    output
+    .||||||||||||||||||.
+    .|----------------|.
+    .|----------------|.
+    .|----------------|.
+    .||||||||||||||||||.
+
+    */
+
+    return 0;
+}
