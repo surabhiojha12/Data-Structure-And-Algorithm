@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+
+
+void graph_build(vector <int> adjList[],int src,int dst,bool bidir = true){
+    adjList[src].push_back(dst);
+    if(bidir){
+        adjList[dst].push_back(src);
+    }
+}
+
+void display_graph(vector <int> adjList[],int v){
+
+    for(int i=0;i<v;i++){
+        cout<<i<<"---->"<<" ";
+        for(auto m:adjList[i]){
+            cout<<m<<",";
+        }
+        cout<<endl;
+    }
+}
+
+void dfs_recursive(vector <int> adjList[],vector <int> &visited,int src){
+    cout<<src<<" ";
+    visited[src] = 1;
+    for(auto m:adjList[src]){
+            if(visited[m] == 0){
+                dfs_recursive(adjList,visited,m);
+            }
+    }
+}
+
+void dfs_connected(vector <int> adjList[],int v){
+    vector <int> visited(v);
+    cout<<"DFS FOREST IS"; //dfs forest is collection of all trees;
+    int component = 0;
+    
+    // loop to find if any component is not visited
+    for(int i=0;i<v;i++){
+        if(visited[i] == 0){
+                
+                component++;
+                cout<<"\nTree (component) = "<<component<<endl;
+                dfs_recursive(adjList,visited,i);
+        }
+    }
+
+    cout<<"\nTotal component = "<<component;
+
+}
+
+int main(){
+
+    int v  = 8;
+    vector <int> adjList[v];
+    //graph representation
+    /* 
+    
+    0 --- 1 ----- 2
+    |             |    6 --- 7
+    |             |
+    |             |
+    3------4------5
+    
+    */
+
+    graph_build(adjList,0,1);
+    graph_build(adjList,0,3);
+    graph_build(adjList,1,2);
+    graph_build(adjList,2,5);
+    graph_build(adjList,3,4);
+    graph_build(adjList,4,5);
+    graph_build(adjList,6,7);
+
+    display_graph(adjList,v);
+
+    dfs_connected(adjList,v);
+
+    return 0;
+
+}
