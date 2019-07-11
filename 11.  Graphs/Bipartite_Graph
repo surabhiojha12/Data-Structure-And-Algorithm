@@ -1,0 +1,87 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+// adjacecny list implementation of graph
+
+void build_graph(vector <int> adjList[],int node,int adj,bool bidir = true){
+    
+    adjList[node].push_back(adj);
+
+    if(bidir){
+        adjList[adj].push_back(node);
+    }
+}
+
+void display_graph(vector <int> adjList[],int v){
+    
+    for(int i=0;i<v;i++){
+        cout<<i<<"-> ";
+        for(auto value:adjList[i]){
+            cout<<value<<",";
+        }
+        cout<<endl;
+    }
+}
+
+
+
+
+bool bfs_bipartite(vector <int> adjList[],int v,int source){
+
+    
+    queue <int> qu;
+    vector <int> visited(v);
+
+    for(int i=0;i<visited.size();i++){
+        visited[i] = -1;
+    }
+
+    qu.push(source);
+    visited[source] = 0;
+
+    while(!qu.empty()){
+        int value = qu.front();
+        for(auto m : adjList [value]){
+
+            if(visited[m] == -1){ // if the node is not visited
+            qu.push(m);
+            visited[m] = 1 - visited[value];
+            }
+
+            else if(visited[m] == visited[value]){ // if both parent and child are of same colour
+                return false;
+            }
+        }
+        qu.pop();
+    }
+
+    return true;
+
+}
+
+int main(){
+    // no of vertices
+    int v = 4;
+    vector <int> adjList[v];
+    
+    
+    build_graph(adjList,0,1);
+    build_graph(adjList,0,2);
+    build_graph(adjList,1,3);
+    build_graph(adjList,2,3);
+   
+
+    display_graph(adjList,v);
+    cout<<endl;
+    bool ans = bfs_bipartite(adjList, v,0);
+
+    if(ans){
+        cout<<"Graph is Bipartite Graph";
+    }
+    else{
+        cout<<"Graph is not Bipartite Graph";
+    }
+
+    return 0;
+}
