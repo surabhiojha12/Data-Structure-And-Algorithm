@@ -1,1 +1,55 @@
+#include<bits/stdc++.h>
 
+using namespace std;
+
+// Insertion Sort
+
+vector <int> Insertion_sort(vector <int> a,int n){
+    int i,j,key,k;
+    
+    for(i=1;i<n;i++){
+        key = a[i];
+        j = i - 1;
+        
+        while(j >= 0 && a[j] > key){
+            a[j+1] = a[j];
+            j--;
+        }
+
+        a[j+1] = key;
+
+        // to print the result of different phases
+
+        for(k=0;k<n;k++){
+            cout<<a[k]<<" ";
+        }
+
+        cout<<endl;
+    }
+
+    return a;
+}
+
+int main(){
+
+    int n,i;
+    cin>>n;
+
+    vector <int> a(n);
+
+    for(i=0;i<n;i++){
+        cin>>a[i];
+    }
+
+    a = Insertion_sort(a,n);
+    
+    cout<<endl;
+    cout<<"Final Sorting"<<endl;
+    for(i=0;i<n;i++){
+        cout<<a[i]<<" ";
+    }
+
+    return 0;
+
+
+}
