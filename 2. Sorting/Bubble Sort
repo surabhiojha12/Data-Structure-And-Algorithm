@@ -1,1 +1,51 @@
+#include<bits/stdc++.h>
 
+using namespace std;
+
+// Bubble Sort
+
+vector <int> Bubble_sort(vector <int> a,int n){
+    int i,j,k;
+    
+    for(i=0;i<n-1;i++){
+        for(j=0;j<n-1-i;j++){
+            if(a[j] > a[j+1]){
+                swap(a[j],a[j+1]);
+            }
+        }
+
+        // to print the result of different phases
+
+        for(k=0;k<n;k++){
+            cout<<a[k]<<" ";
+        }
+
+        cout<<endl;
+    }
+
+    return a;
+}
+
+int main(){
+
+    int n,i;
+    cin>>n;
+
+    vector <int> a(n);
+
+    for(i=0;i<n;i++){
+        cin>>a[i];
+    }
+
+    a = Bubble_sort(a,n);
+    
+    cout<<endl;
+    cout<<"Final Sorting"<<endl;
+    for(i=0;i<n;i++){
+        cout<<a[i]<<" ";
+    }
+
+    return 0;
+
+
+}
