@@ -1,1 +1,46 @@
+#include<bits/stdc++.h>
 
+using namespace std;
+
+// Counting Sort
+
+vector <int> Counting_sort(vector <int> a,int n){
+    // suppose the range of numbers are from 1 to 1000
+    vector <int> count(1001) , ans;
+    int i;
+    for(i=0;i<n;i++){
+        count[a[i]]++;
+    }
+
+    for(i=0;i<1001;i++){
+        if(count[i] > 0){
+            ans.push_back(i);
+        }
+    }
+
+    return ans;
+}
+
+int main(){
+
+    int n,i;
+    cin>>n;
+
+    vector <int> a(n);
+
+    for(i=0;i<n;i++){
+        cin>>a[i];
+    }
+
+    a = Counting_sort(a,n);
+    
+    cout<<endl;
+    cout<<"Final Sorting"<<endl;
+    for(i=0;i<n;i++){
+        cout<<a[i]<<" ";
+    }
+
+    return 0;
+
+
+}
