@@ -1,1 +1,54 @@
+#include<bits/stdc++.h>
 
+using namespace std;
+
+// Selection Sort
+
+vector <int> Selection_sort(vector <int> a,int n){
+    int i,j,k,min_index;
+    
+    for(i=0;i<n-1;i++){
+        min_index = i;
+        for(j=i;j<n;j++){
+            if(a[j] < a[min_index]){
+                min_index = j;
+            }
+        }
+
+        swap(a[i],a[min_index]);
+
+        // to print the result of different phases
+
+        for(k=0;k<n;k++){
+            cout<<a[k]<<" ";
+        }
+
+        cout<<endl;
+    }
+
+    return a;
+}
+
+int main(){
+
+    int n,i;
+    cin>>n;
+
+    vector <int> a(n);
+
+    for(i=0;i<n;i++){
+        cin>>a[i];
+    }
+
+    a = Selection_sort(a,n);
+    
+    cout<<endl;
+    cout<<"Final Sorting"<<endl;
+    for(i=0;i<n;i++){
+        cout<<a[i]<<" ";
+    }
+
+    return 0;
+
+
+}
